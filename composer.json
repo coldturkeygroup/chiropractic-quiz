@@ -1,0 +1,24 @@
+{
+  "name": "coldturkeygroup/chiro-quiz",
+  "description": "Simple chiropractic lead generation through a quiz that helps qualify prospective patients.",
+  "homepage": "https://platform.marketing/",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Platform Marketing",
+      "email": "support@platform.marketing",
+      "homepage": "https://platform.marketing"
+    }
+  ],
+  "type": "wordpress-plugin",
+  "require": {
+    "php": ">=7.0",
+    "composer/installers": "v1.0.12",
+    "guzzlehttp/guzzle": "~6.0"
+  },
+  "autoload": {
+    "classmap": [
+      "classes"
+    ]
+  }
+}
