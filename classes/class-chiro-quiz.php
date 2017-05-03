@@ -654,18 +654,41 @@ class ChiroQuiz
     }
 
     /**
+     * Format the responses to the quiz to be shown
+     * in the email sent to the site admin.
+     *
+     * @param $quiz_id
+     * @param $responses
+     *
+     * @return array
+     */
+    protected function formatResponses($quiz_id, $responses)
+    {
+        $formatted = [];
+        array_push($formatted, $responses[1]);
+        array_push($formatted, $responses[2]);
+        array_push($formatted, $responses[3]);
+        unset($responses[1]);
+        unset($responses[2]);
+        unset($responses[3]);
+        $mapped = call_user_func_array('array_merge', $responses);
+
+        return $formatted + $mapped;
+    }
+
+    /**
      * Email the quiz results to the website admin
      *
      * @param $user_id
      * @param $score
      * @param $quiz_id
      */
-    protected function emailResultsToAdmin($user_id, $score, $quiz_id)
+    protected function emailResultsToAdmin($user_id, $score, $responses, $quiz_id)
     {
         // Get the prospect data saved previously
         global $wpdb;
         $subscriber = $wpdb->get_row('SELECT * FROM ' . $this->table_name . ' WHERE id = \'' . $user_id . '\' ORDER BY id DESC LIMIT 0,1');
-        $responses = $this->formatResponsesForEmail($quiz_id, explode(',', $subscriber->responses));
+        $responses = $this->formatResponses($quiz_id, $responses);
         $title = get_the_title($quiz_id);
         $email = get_bloginfo('admin_email');
 
@@ -744,17 +767,17 @@ class ChiroQuiz
             }
 
             // Create a note for the FrontDesk prospect
-            if ($frontdesk_id != null) {
+            if ($frontdesk_id !== null) {
                 $responses = $this->formatResponses($quiz_id, $_POST['questions']);
                 $content = '<p><strong>Quiz Score:</strong> ' . $score['score'] . '/88</p>';
                 foreach ($responses as $response) {
                     $content .= '<p><strong>' . $response['question'] . '</strong><br> ' . $response['answer'] . '</p>';
                 }
-                $this->frontdesk->createNote($frontdesk_id, 'Chiro Quiz Responses', $content);
+                $this->frontdesk->createNote($frontdesk_id, 'Chiro Quiz Responses', stripslashes($content));
             }
 
             // Email the blog owner the details for the new prospect
-            $this->emailResultsToAdmin($user_id, $score['score'], $quiz_id);
+            $this->emailResultsToAdmin($user_id, $score['score'], $_POST['questions'], $quiz_id);
 
             echo json_encode(['user_id' => $user_id, 'score' => $score['score'], 'feedback' => $score['feedback']]);
             die();

@@ -102,11 +102,11 @@ if ($hover_setting && strlen($hover_setting) > 0 && $hover_setting != '') {
 
           <div class="row">
             <div class="col-xs-12">
-              <input name="questions[1][answer]" type="radio" value="I'm younger than 35" data-score="4">
+              <input name="questions[1][answer]" type="radio" value="I'm younger than 35" data-score="8">
               <label><i class="fa fa-fw"></i> I'm younger than 35</label>
             </div>
             <div class="col-xs-12">
-              <input name="questions[1][answer]" type="radio" value="I'm 35 or older" data-score="4">
+              <input name="questions[1][answer]" type="radio" value="I'm 35 or older" data-score="8">
               <label><i class="fa fa-fw"></i> I'm 35 or older</label>
             </div>
           </div>
@@ -125,7 +125,7 @@ if ($hover_setting && strlen($hover_setting) > 0 && $hover_setting != '') {
               <label><i class="fa fa-fw"></i> Yes, I am probably sitting for 6+ hours per day</label>
             </div>
             <div class="col-xs-12">
-              <input name="questions[2][answer]" type="radio" value="Yes, I sit for 2-6 hours per day" data-score="6">
+              <input name="questions[2][answer]" type="radio" value="Yes, I sit for 2-6 hours per day" data-score="8">
               <label><i class="fa fa-fw"></i> Yes, I sit for 2-6 hours per day</label>
             </div>
             <div class="col-xs-12">
@@ -175,11 +175,11 @@ if ($hover_setting && strlen($hover_setting) > 0 && $hover_setting != '') {
 
           <div class="row">
             <div class="col-xs-12">
-              <input class="back_pain-question" name="questions[back_pain][4][answer]" type="radio" value="During the day" data-score="4">
+              <input class="back_pain-question" name="questions[back_pain][4][answer]" type="radio" value="During the day" data-score="8">
               <label><i class="fa fa-fw"></i> During the day</label>
             </div>
             <div class="col-xs-12">
-              <input class="back_pain-question" name="questions[back_pain][4][answer]" type="radio" value="At night/in bed" data-score="6">
+              <input class="back_pain-question" name="questions[back_pain][4][answer]" type="radio" value="At night/in bed" data-score="8">
               <label><i class="fa fa-fw"></i> At night/in bed</label>
             </div>
           </div>
@@ -194,11 +194,11 @@ if ($hover_setting && strlen($hover_setting) > 0 && $hover_setting != '') {
 
           <div class="row">
             <div class="col-xs-12">
-              <input class="back_pain-question" name="questions[back_pain][5][answer]" type="radio" value="There are certain movements that trigger it" data-score="4">
+              <input class="back_pain-question" name="questions[back_pain][5][answer]" type="radio" value="There are certain movements that trigger it" data-score="8">
               <label><i class="fa fa-fw"></i> There are certain movements that trigger it</label>
             </div>
             <div class="col-xs-12">
-              <input class="back_pain-question" name="questions[back_pain][5][answer]" type="radio" value="My back pain seems to occur randomly" data-score="4">
+              <input class="back_pain-question" name="questions[back_pain][5][answer]" type="radio" value="My back pain seems to occur randomly" data-score="8">
               <label><i class="fa fa-fw"></i> My back pain seems to occur randomly</label>
             </div>
           </div>
@@ -413,11 +413,11 @@ if ($hover_setting && strlen($hover_setting) > 0 && $hover_setting != '') {
 
           <div class="row">
             <div class="col-xs-12">
-              <input class="neck_pain-question" name="questions[neck_pain][4][answer]" type="radio" value="During the day" data-score="4">
+              <input class="neck_pain-question" name="questions[neck_pain][4][answer]" type="radio" value="During the day" data-score="8">
               <label><i class="fa fa-fw"></i> During the day</label>
             </div>
             <div class="col-xs-12">
-              <input class="neck_pain-question" name="questions[neck_pain][4][answer]" type="radio" value="At night/in bed" data-score="4">
+              <input class="neck_pain-question" name="questions[neck_pain][4][answer]" type="radio" value="At night/in bed" data-score="8">
               <label><i class="fa fa-fw"></i> At night/in bed</label>
             </div>
           </div>
@@ -432,19 +432,19 @@ if ($hover_setting && strlen($hover_setting) > 0 && $hover_setting != '') {
 
           <div class="row">
             <div class="col-xs-12">
-              <input class="neck_pain-question" name="questions[neck_pain][5][answer]" type="radio" value="Yes, I experience headaches about once per month" data-score="4">
+              <input class="neck_pain-question" name="questions[neck_pain][5][answer]" type="radio" value="Yes, I experience headaches about once per month" data-score="8">
               <label><i class="fa fa-fw"></i> Yes, I experience headaches about once per month</label>
             </div>
             <div class="col-xs-12">
-              <input class="neck_pain-question" name="questions[neck_pain][5][answer]" type="radio" value="Yes, I experience headaches every week" data-score="4">
+              <input class="neck_pain-question" name="questions[neck_pain][5][answer]" type="radio" value="Yes, I experience headaches every week" data-score="8">
               <label><i class="fa fa-fw"></i> Yes, I experience headaches every week</label>
             </div>
             <div class="col-xs-12">
-              <input class="neck_pain-question" name="questions[neck_pain][5][answer]" type="radio" value="Yes, I experience headaches daily" data-score="4">
+              <input class="neck_pain-question" name="questions[neck_pain][5][answer]" type="radio" value="Yes, I experience headaches daily" data-score="8">
               <label><i class="fa fa-fw"></i> Yes, I experience headaches daily</label>
             </div>
             <div class="col-xs-12">
-              <input class="neck_pain-question" name="questions[neck_pain][5][answer]" type="radio" value="No, I do not experience headaches (just neck pain)" data-score="4">
+              <input class="neck_pain-question" name="questions[neck_pain][5][answer]" type="radio" value="No, I do not experience headaches (just neck pain)" data-score="8">
               <label><i class="fa fa-fw"></i> No, I do not experience headaches (just neck pain)</label>
             </div>
           </div>
@@ -651,19 +651,19 @@ if ($hover_setting && strlen($hover_setting) > 0 && $hover_setting != '') {
 
           <div class="row">
             <div class="col-xs-12">
-              <input class="migraines-question" name="questions[migraines][4][answer]" type="radio" value="Yes, probably once per week" data-score="4">
+              <input class="migraines-question" name="questions[migraines][4][answer]" type="radio" value="Yes, probably once per week" data-score="8">
               <label><i class="fa fa-fw"></i> Yes, probably once per week</label>
             </div>
             <div class="col-xs-12">
-              <input class="migraines-question" name="questions[migraines][4][answer]" type="radio" value="Yes, more than once per week" data-score="4">
+              <input class="migraines-question" name="questions[migraines][4][answer]" type="radio" value="Yes, more than once per week" data-score="8">
               <label><i class="fa fa-fw"></i> Yes, more than once per week</label>
             </div>
             <div class="col-xs-12">
-              <input class="migraines-question" name="questions[migraines][4][answer]" type="radio" value="Yes, I very rarely consume alcohol (less than 10 times per year)" data-score="4">
+              <input class="migraines-question" name="questions[migraines][4][answer]" type="radio" value="Yes, I very rarely consume alcohol (less than 10 times per year)" data-score="8">
               <label><i class="fa fa-fw"></i> Yes, I very rarely consume alcohol (less than 10 times per year)</label>
             </div>
             <div class="col-xs-12">
-              <input class="migraines-question" name="questions[migraines][4][answer]" type="radio" value="No, I never consume alcohol" data-score="4">
+              <input class="migraines-question" name="questions[migraines][4][answer]" type="radio" value="No, I never consume alcohol" data-score="8">
               <label><i class="fa fa-fw"></i> No, I never consume alcohol</label>
             </div>
           </div>
@@ -678,11 +678,11 @@ if ($hover_setting && strlen($hover_setting) > 0 && $hover_setting != '') {
 
           <div class="row">
             <div class="col-xs-12">
-              <input class="migraines-question" name="questions[migraines][5][answer]" type="radio" value="Yes, I am much more likely to experience migraine headaches if I have less than 7 hours of sleep" data-score="4">
+              <input class="migraines-question" name="questions[migraines][5][answer]" type="radio" value="Yes, I am much more likely to experience migraine headaches if I have less than 7 hours of sleep" data-score="8">
               <label><i class="fa fa-fw"></i> Yes, I am much more likely to experience migraine headaches if I have less than 7 hours of sleep</label>
             </div>
             <div class="col-xs-12">
-              <input class="migraines-question" name="questions[migraines][5][answer]" type="radio" value="No, my migraine headaches are not triggered by lack of sleep" data-score="4">
+              <input class="migraines-question" name="questions[migraines][5][answer]" type="radio" value="No, my migraine headaches are not triggered by lack of sleep" data-score="8">
               <label><i class="fa fa-fw"></i> No, my migraine headaches are not triggered by lack of sleep</label>
             </div>
           </div>
@@ -989,11 +989,11 @@ if ($hover_setting && strlen($hover_setting) > 0 && $hover_setting != '') {
 
           <div class="row">
             <div class="col-xs-12">
-              <input class="joint-question" name="questions[joint][4][answer]" type="radio" value="During the day" data-score="4">
+              <input class="joint-question" name="questions[joint][4][answer]" type="radio" value="During the day" data-score="8">
               <label><i class="fa fa-fw"></i> During the day</label>
             </div>
             <div class="col-xs-12">
-              <input class="joint-question" name="questions[joint][4][answer]" type="radio" value="At night/in bed" data-score="4">
+              <input class="joint-question" name="questions[joint][4][answer]" type="radio" value="At night/in bed" data-score="8">
               <label><i class="fa fa-fw"></i> At night/in bed</label>
             </div>
           </div>
@@ -1008,11 +1008,11 @@ if ($hover_setting && strlen($hover_setting) > 0 && $hover_setting != '') {
 
           <div class="row">
             <div class="col-xs-12">
-              <input class="joint-question" name="questions[joint][5][answer]" type="radio" value="Yes" data-score="4">
+              <input class="joint-question" name="questions[joint][5][answer]" type="radio" value="Yes" data-score="8">
               <label><i class="fa fa-fw"></i> Yes</label>
             </div>
             <div class="col-xs-12">
-              <input class="joint-question" name="questions[joint][5][answer]" type="radio" value="No" data-score="4">
+              <input class="joint-question" name="questions[joint][5][answer]" type="radio" value="No" data-score="8">
               <label><i class="fa fa-fw"></i> No</label>
             </div>
           </div>
@@ -1238,19 +1238,19 @@ if ($hover_setting && strlen($hover_setting) > 0 && $hover_setting != '') {
 
           <div class="row">
             <div class="col-xs-12">
-              <input class="allergies-question" name="questions[allergies][4][answer]" type="radio" value="Yes, probably once per week" data-score="4">
+              <input class="allergies-question" name="questions[allergies][4][answer]" type="radio" value="Yes, probably once per week" data-score="8">
               <label><i class="fa fa-fw"></i> Yes, probably once per week</label>
             </div>
             <div class="col-xs-12">
-              <input class="allergies-question" name="questions[allergies][4][answer]" type="radio" value="Yes, more than once per week" data-score="4">
+              <input class="allergies-question" name="questions[allergies][4][answer]" type="radio" value="Yes, more than once per week" data-score="8">
               <label><i class="fa fa-fw"></i> Yes, more than once per week</label>
             </div>
             <div class="col-xs-12">
-              <input class="allergies-question" name="questions[allergies][4][answer]" type="radio" value="Yes, I very rarely consume alcohol (less than 10 times per year)" data-score="4">
+              <input class="allergies-question" name="questions[allergies][4][answer]" type="radio" value="Yes, I very rarely consume alcohol (less than 10 times per year)" data-score="8">
               <label><i class="fa fa-fw"></i> Yes, I very rarely consume alcohol (less than 10 times per year)</label>
             </div>
             <div class="col-xs-12">
-              <input class="allergies-question" name="questions[allergies][4][answer]" type="radio" value="No, I never consume alcohol" data-score="4">
+              <input class="allergies-question" name="questions[allergies][4][answer]" type="radio" value="No, I never consume alcohol" data-score="8">
               <label><i class="fa fa-fw"></i> No, I never consume alcohol</label>
             </div>
           </div>
@@ -1265,11 +1265,11 @@ if ($hover_setting && strlen($hover_setting) > 0 && $hover_setting != '') {
 
           <div class="row">
             <div class="col-xs-12">
-              <input class="allergies-question" name="questions[allergies][5][answer]" type="radio" value="Yes, I am much more likely to experience symptoms if I have less than 7 hours of sleep" data-score="4">
+              <input class="allergies-question" name="questions[allergies][5][answer]" type="radio" value="Yes, I am much more likely to experience symptoms if I have less than 7 hours of sleep" data-score="8">
               <label><i class="fa fa-fw"></i> Yes, I am much more likely to experience symptoms if I have less than 7 hours of sleep</label>
             </div>
             <div class="col-xs-12">
-              <input class="allergies-question" name="questions[allergies][5][answer]" type="radio" value="No, it's not triggered by lack of sleep" data-score="4">
+              <input class="allergies-question" name="questions[allergies][5][answer]" type="radio" value="No, it's not triggered by lack of sleep" data-score="8">
               <label><i class="fa fa-fw"></i> No, it's not triggered by lack of sleep</label>
             </div>
           </div>
