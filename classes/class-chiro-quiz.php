@@ -622,161 +622,35 @@ class ChiroQuiz
     /**
      * Score the quiz answers provided by the user.
      *
-     * @param $input
+     * @param int $score
      *
      * @return array
      */
-    protected function score_quiz($input)
+    protected function score_quiz($score)
     {
-        $responses = [];
-        $score = 0;
-        $response = '';
         $feedback = [
             [
-                '<em>Since you scored over 50 out of a possible 88</em>, you should be able to sell your house quickly and for top dollar. For the best results, talk to a licensed real estate agent who can give you advice on how to get top dollar for your home.',
+                'Since you scored under 75 out of a possible 88, <em>chirotherapy probably isn\'t for you.</em>',
                 0,
-                64
+                75
             ],
             [
-                '<em>Congrats! Since you scored over 65 out of a possible 88</em>, you should be able to sell your house quickly and for top dollar.',
-                65,
-                74
+                'Congrats! Since you scored between 76 and 85, <em>chirotherapy may help treat your pain!</em>',
+                76,
+                85
             ],
             [
-                '<em>Congrats! Since you scored over 75 out of a possible 88</em>, you should be able to sell your house quickly and for top dollar.',
-                75,
-                88
+                'Congrats! Since you scored over 86, <em>chirotherapy can definitely help treat your pain!</em>',
+                86,
+                300
             ]
         ];
-
-        foreach ($input as $key => $value) {
-            if (strpos($key, 'question_') === false) {
-                continue;
-            }
-
-            $answer_score = explode('-', $value);
-            array_push($responses, $answer_score[0]);
-            $score += $answer_score[1];
-        }
 
         foreach ($feedback as $key => $value) {
             if ($score >= $value[1] && $score <= $value[2]) {
-                $response = $value[0];
-                break;
+                return ['score' => $score, 'feedback' => $value[0]];
             }
         }
-
-        return ['score' => $score, 'responses' => $responses, 'feedback' => $response];
-    }
-
-    /**
-     * Format the responses to the quiz to be shown
-     * in the email sent to the site admin.
-     *
-     * @param $quiz_id
-     * @param $responses
-     *
-     * @return array
-     */
-    protected function formatResponsesForEmail($quiz_id, $responses)
-    {
-        $closing_costs = get_post_meta($quiz_id, 'closing', true);
-        $question_ten = 'Are you willing to share closing costs with the potential buyer?';
-        $answers_ten = ['a' => 'Yes', 'b' => 'No'];
-
-        if ($closing_costs == 'no') {
-            $question_ten = 'Does your home\'s exterior showcase good "curb appeal?"';
-            $answers_ten = [
-                'a' => 'Yes, I take good care of my lawn, landscaping, etc.',
-                'b' => 'It\'s not bad, but it could use some work.'
-            ];
-        }
-
-        // Define our area
-        $area = get_option('platform_user_county', 'Our') . ' County';
-        if (get_post_meta($quiz_id, 'area', true) == 'state') {
-            $area = get_option('platform_user_state', 'our state');
-        } elseif (get_post_meta($quiz_id, 'area', true) == 'city') {
-            $area = get_option('platform_user_city', 'our city');
-        } elseif (get_post_meta($quiz_id, 'area', true) == 'custom') {
-            $area = get_post_meta($quiz_id, 'area_custom', true);
-        }
-
-        $question_bank = [
-            'How long have you owned your home?',
-            'Do you need your home to sell in less than 90 days, or are you willing to wait for a potential buyer that might be willing to pay more money?',
-            'Is your home newly renovated/updated, or does it currently need minor upgrades?',
-            'Here in ' . $area . ' , certain price ranges sell a lot faster than other price ranges. What do you think your home is worth right now?',
-            'What is the approximate age of your home?',
-            'What is the condition of your roof/shingles?',
-            'Does home equity play a major role in your retirement savings/strategy?',
-            'Sometimes a home sale can affect your tax liability. Have you already spoken with an accountant?',
-            'Are you prepared to "stage" your house during the time it is for sale? (Removing personal items like family photos, artwork, and rearranging furniture/layout so potential buyers can visualize it being their home—not yours).',
-            $question_ten,
-            'Have you made any significant upgrades or renovations to your home since you purchased it?'
-        ];
-        $answer_bank = [
-            [
-                'a' => 'Less than 2 years',
-                'b' => '2-5 years',
-                'c' => '5-10 years',
-                'd' => '10+ years'
-            ],
-            [
-                'a' => 'My home needs to sell as soon as possible',
-                'b' => 'I\'m willing to wait for the right price, even if it takes longer'
-            ],
-            [
-                'a' => 'It definitely needs some work. I would need to make repairs and upgrades before selling.',
-                'b' => 'It needs some cosmetic repairs, but nothing major (new paint, etc.)',
-                'c' => 'It\'s pretty updated (newer appliances, newer interior)',
-                'd' => 'My house is completely updated with brand new appliances, brand new interior (flooring, walls, etc.)'
-            ],
-            [
-                'a' => 'Less than $250,000',
-                'b' => '$250,000-$500,000',
-                'c' => '$500,000-$750,000',
-                'd' => '$750,000+'
-            ],
-            [
-                'a' => 'It\'s less than 5 years old',
-                'b' => 'It\'s 5-10 years old',
-                'c' => '10-20 years old',
-                'd' => '20 years+'
-            ],
-            [
-                'a' => 'It\'s brand new',
-                'b' => 'Less than 5 years old',
-                'c' => 'Less than 15 years old',
-                'd' => 'It probably needs to be replaced'
-            ],
-            ['a' => 'Yes', 'b' => 'No, not really'],
-            ['a' => 'Yes', 'b' => 'No'],
-            [
-                'a' => 'Yes, I\'m willing to do whatever it takes to sell my home quickly and for top dollar—even if it means I have to temporarily take down family photos, get the house professionally cleaned, and maybe even paint rooms neutral colors to appeal to buyers.',
-                'b' => 'Yes, I\'m willing to stage my home to appeal to buyers, however, I don\'t want to go overboard and spend a lot of time on it.',
-                'c' => 'No, I believe my home will sell anyways, so I don\'t want to spend too much time on staging.',
-                'd' => 'No, I do not have the time or money to stage my home.'
-            ],
-            $answers_ten,
-            [
-                'a' => 'Yes, I\'ve renovated/upgraded the bathroom',
-                'b' => 'Yes, I\'ve renovated/upgraded the kitchen',
-                'c' => 'Yes, I\'ve renovated/upgraded most of the house (kitchen, bathroom, bedrooms, living space, etc.)',
-                'd' => 'No, I have not made any significant improvements'
-            ]
-        ];
-
-        $formatted = [];
-
-        foreach ($responses as $key => $value) {
-            $question['question'] = $question_bank[$key];
-            $question['answer'] = $answer_bank[$key][$value];
-
-            array_push($formatted, $question);
-        }
-
-        return $formatted;
     }
 
     /**
@@ -829,7 +703,7 @@ class ChiroQuiz
             $frontdesk_campaign = sanitize_text_field($_POST['frontdesk_campaign']);
             $first_name = sanitize_text_field($_POST['first_name']);
             $email = sanitize_text_field($_POST['email']);
-            $score = $this->score_quiz($_POST);
+            $score = $this->score_quiz($_POST['score']);
 
             if (!isset($_POST['first_name']) || $_POST['first_name'] == '') {
                 echo json_encode(['user_id' => '', 'score' => $score['score'], 'feedback' => $score['feedback']]);
@@ -845,7 +719,7 @@ class ChiroQuiz
                     $first_name,
                     $email,
                     $score['score'],
-                    implode(',', $score['responses'])
+                    ''
                 ]
             ));
 
@@ -871,7 +745,7 @@ class ChiroQuiz
 
             // Create a note for the FrontDesk prospect
             if ($frontdesk_id != null) {
-                $responses = $this->formatResponsesForEmail($quiz_id, $score['responses']);
+                $responses = $this->formatResponses($quiz_id, $_POST['questions']);
                 $content = '<p><strong>Quiz Score:</strong> ' . $score['score'] . '/88</p>';
                 foreach ($responses as $response) {
                     $content .= '<p><strong>' . $response['question'] . '</strong><br> ' . $response['answer'] . '</p>';

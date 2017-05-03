@@ -18,7 +18,7 @@ jQuery(function ($) {
     });
 
     // Email Validation
-    if (ChiroQuiz.mailgun !== undefined && ChiroQuiz.mailgun !== '') {
+    if (ChiroQuiz.mailgun !== undefined && ChiroQuiz.mailgun !== null) {
         $('#email').mailgun_validator({
             api_key: ChiroQuiz.mailgun,
             in_progress: function () {
@@ -34,6 +34,7 @@ jQuery(function ($) {
             }
         });
     }
+
     // Parse Mailgun Responses
     function get_suggestion_str(is_valid, alternate) {
         if (is_valid) {
@@ -50,6 +51,7 @@ jQuery(function ($) {
 
             return;
         }
+
         $('#email').parent().addClass('has-error');
         if (alternate) {
             return '<div class="mailcheck-suggestion help-block">This email is invalid. Did you mean <a href="#">' + alternate + '</a>?</div>';
@@ -79,8 +81,8 @@ jQuery(function ($) {
 
     // styling for quiz choices
     $('.page input[type=radio]').each(function () {
-        var self = $(this),
-            label = self.next();
+        var self = $(this);
+        var label = self.next();
 
         label.remove();
         self.iCheck({
@@ -112,6 +114,13 @@ jQuery(function ($) {
 
         if (stepVerify('quiz') == 0) {
             var form = $('#chiro-quiz');
+            var score = 0;
+
+            $('input[type="radio"]:checked:not(:disabled)').each(function () {
+                score += parseInt($(this).data('score'), 10);
+            });
+
+            form.append('<input type="hidden" name="score" value="' + score + '">');
 
             $.ajax({
                 type: 'POST',
@@ -134,8 +143,8 @@ jQuery(function ($) {
                         }
                         $('.quiz-page').animate({'padding-top': '6%'}, 500);
 
-                        var retargeting = $('#retargeting').val(),
-                            conversion = $('#conversion').val();
+                        var retargeting = $('#retargeting').val();
+                        var conversion = $('#conversion').val();
                         if (retargeting != '') {
                             (function () {
                                 var _fbq = window._fbq || (window._fbq = []);

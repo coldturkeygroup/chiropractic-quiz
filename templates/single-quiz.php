@@ -1522,6 +1522,14 @@ if ($hover_setting && strlen($hover_setting) > 0 && $hover_setting != '') {
         </div>
       </div>
 
+      <div class="row page" style="display:none;">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-12 col-sm-offset-0 col-md-8 col-md-offset-2" id="offer" data-model="offer">
+          <h4 style="text-align: center;" class="landing-title">Awesome. Click below to see your quiz results!</h4>
+
+          <button class="btn btn-primary btn-lg" id="get-results">Get My Results!</button>
+        </div>
+      </div>
+
       <div class="footer"><?php echo $broker;
           if (isset($phone) && $phone != null) {
               echo ' &middot; ' . $phone;
