@@ -8,7 +8,7 @@ jQuery(function ($) {
         });
 
         // Start quiz
-        nextStep();
+        updateProgressBar(1);
         $('.footer').addClass('animated fadeOutDown');
         $('.footer-quiz').addClass('animated fadeInUpBig').show();
 
@@ -211,33 +211,6 @@ jQuery(function ($) {
         return count;
     }
 
-    function nextStep() {
-        var $active = $('.quiz-page .page:visible'),
-            $next = $('.quiz-page .page:visible').next('.page'),
-            $step = $active.find('.question-number').text();
-
-        $active.removeClass('fadeIn fadeInUpBig fadeInDownBig fadeOutUpBig fadeOutDownBig').addClass('fadeOutUpBig');
-        $next.removeClass('fadeIn fadeInUpBig fadeInDownBig fadeOutUpBig fadeOutDownBig').addClass('animated fadeInUpBig').show();
-
-        setTimeout(function () {
-            $active.hide();
-        }, 500);
-
-        if ($step == '1.') {
-            $('#quiz-back').show();
-        }
-
-        if ($step == '11.' && $('#showFields').val() == 'no') {
-            showResults();
-        }
-
-        if ($step == '') {
-            $step = '0.';
-        }
-
-        updateProgressBar(parseInt($step.replace('.', ''), 10) + 1);
-    }
-
     // Show quiz results
     function showResults() {
         var form = $('#chiro-quiz');
@@ -291,31 +264,105 @@ jQuery(function ($) {
         });
     }
 
-    function previousStep() {
-        var $active = $('.quiz-page .page:visible'),
-            $prev = $('.quiz-page .page:visible').prev('.page'),
-            $step = $active.find('.question-number').text();
+    function nextStep() {
+        var active = $('.quiz-page').find('.page:visible');
+        var step = active.find('.question-number').text().replace('.', '');
 
-        $active.removeClass('fadeIn fadeInUpBig fadeInDownBig fadeOutUpBig fadeOutDownBig').addClass('fadeOutDownBig');
-        $prev.removeClass('fadeIn fadeInUpBig fadeInDownBig fadeOutUpBig fadeOutDownBig').addClass('animated fadeInDownBig').show();
+        if (step === '3') {
+            var type = $('input[name="questions[3][answer]"]:checked').data('questions');
+
+            if (type === 'back_pain') {
+                $('.neck_pain-page, .joint-page, .migraines-page, .allergies-page').removeClass('page');
+                $('.neck_pain-question, .joint-question, .migraines-question, .allergies-question').attr('disabled', 'disabled');
+            } else if (type === 'neck_pain') {
+                $('.back_pain-page, .joint-page, .migraines-page, .allergies-page').removeClass('page');
+                $('.back_pain-question, .joint-question, .migraines-question, .allergies-question').attr('disabled', 'disabled');
+            } else if (type === 'joint') {
+                $('.back_pain-page, .neck_pain-page, .migraines-page, .allergies-page').removeClass('page');
+                $('.back_pain-question, .neck_pain-question, .migraines-question, .allergies-question').attr('disabled', 'disabled');
+            } else if (type === 'migraines') {
+                $('.back_pain-page, .neck_pain-page, .joint-page, .allergies-page').removeClass('page');
+                $('.back_pain-question, .neck_pain-question, .joint-question, .allergies-question').attr('disabled', 'disabled');
+            } else if (type === 'allergies') {
+                $('.back_pain-page, .neck_pain-page, .joint-page, .migraines-page').removeClass('page');
+                $('.back_pain-question, .neck_pain-question, .joint-question, .migraines-question').attr('disabled', 'disabled');
+            }
+        }
+
+        var next = active.nextAll('.page').first();
+        active.removeClass('fadeIn fadeInUpBig fadeInDownBig fadeOutUpBig fadeOutDownBig').addClass('fadeOutUpBig');
+        next.removeClass('fadeIn fadeInUpBig fadeInDownBig fadeOutUpBig fadeOutDownBig').addClass('animated fadeInUpBig').show();
 
         setTimeout(function () {
-            $active.hide();
+            active.hide();
         }, 500);
 
-        if ($step == '2.') {
+        if (step === '1') {
+            $('#quiz-back').show();
+        }
+
+        if (step === '11' && $('#showFields').val() === 'no') {
+            showResults();
+        }
+
+        if (step === '') {
+            step = '0';
+        }
+
+        updateProgressBar(parseInt(step, 10) + 1);
+    }
+
+    function previousStep() {
+        var active = $('.quiz-page').find('.page:visible');
+        var prev = active.prevAll('.page').first();
+        var step = active.find('.question-number').text().replace('.', '');
+
+        if (step === '4') {
+            var type = $('input[name="questions[3][answer]"]:checked').data('questions');
+
+            if (type === 'back_pain') {
+                $('.neck_pain-page, .joint-page, .migraines-page, .allergies-page').addClass('page');
+                $('.neck_pain-question, .joint-question, .migraines-question, .allergies-question').removeAttr('disabled');
+            } else if (type === 'neck_pain') {
+                $('.back_pain-page, .joint-page, .migraines-page, .allergies-page').addClass('page');
+                $('.back_pain-question, .joint-question, .migraines-question, .allergies-question').removeAttr('disabled');
+            } else if (type === 'joint') {
+                $('.back_pain-page, .neck_pain-page, .migraines-page, .allergies-page').addClass('page');
+                $('.back_pain-question, .neck_pain-question, .migraines-question, .allergies-question').removeAttr('disabled');
+            } else if (type === 'migraines') {
+                $('.back_pain-page, .neck_pain-page, .joint-page, .allergies-page').addClass('page');
+                $('.back_pain-question, .neck_pain-question, .joint-question, .allergies-question').removeAttr('disabled');
+            } else if (type === 'allergies') {
+                $('.back_pain-page, .neck_pain-page, .joint-page, .migraines-page').addClass('page');
+                $('.back_pain-question, .neck_pain-question, .joint-question, .migraines-question').removeAttr('disabled');
+            }
+        }
+
+        active.removeClass('fadeIn fadeInUpBig fadeInDownBig fadeOutUpBig fadeOutDownBig').addClass('fadeOutDownBig');
+        prev.removeClass('fadeIn fadeInUpBig fadeInDownBig fadeOutUpBig fadeOutDownBig').addClass('animated fadeInDownBig').show();
+
+        setTimeout(function () {
+            active.hide();
+        }, 500);
+
+        if (step === '2') {
             $('#quiz-back').hide();
         }
 
-        if ($step == '') {
-            $step = '12.';
+        if (step === '') {
+            step = '12';
         }
 
-        updateProgressBar(parseInt($step.replace('.', ''), 10) - 1);
+        updateProgressBar(parseInt(step, 10) - 1);
     }
 
     function updateProgressBar(step) {
-        var progress = Math.ceil((step / 12) * 100);
+        var numberOfQuestions = $('.page').length;
+        if (numberOfQuestions > 17) {
+            numberOfQuestions = 17;
+        }
+
+        var progress = Math.ceil((step / numberOfQuestions) * 100);
 
         $('.progress-percent').text(progress);
         $('.progress-bar').attr('aria-valuenow', progress).css('width', progress + '%');

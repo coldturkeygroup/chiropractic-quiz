@@ -453,36 +453,9 @@ class ChiroQuiz
         $fields['quiz_title'] = [
             'name'        => __('Quiz Title', $this->token),
             'description' => __('The title that will be displayed for your quiz.', $this->token),
-            'placeholder' => 'Should you sell your home?',
+            'placeholder' => 'Can chirotherapy treat your pain?',
             'type'        => 'text',
-            'default'     => 'Should you sell your home?',
-            'section'     => 'info'
-        ];
-
-        $fields['quiz_subtitle'] = [
-            'name'        => __('Quiz Subtitle', $this->token),
-            'description' => __('The subtitle displayed under the title for your quiz.', $this->token),
-            'placeholder' => 'Find out if it\'s the right time to list your home for sale.',
-            'type'        => 'text',
-            'default'     => 'Find out if it\'s the right time to list your home for sale.',
-            'section'     => 'info'
-        ];
-
-        $fields['quiz_start_button'] = [
-            'name'        => __('Quiz Start Button', $this->token),
-            'description' => __('The text displayed on the button to start your quiz.', $this->token),
-            'placeholder' => 'Take The Quiz',
-            'type'        => 'text',
-            'default'     => 'Take The Quiz',
-            'section'     => 'info'
-        ];
-
-        $fields['home_valuator'] = [
-            'name'        => __('Link To Home Valuator', $this->token),
-            'description' => __('The last step of the funnel allows you to link the user to your Home Valuator. Enter the link for the funnel here.', $this->token),
-            'placeholder' => '',
-            'type'        => 'posts',
-            'default'     => 'pf_valuator',
+            'default'     => 'Can chirotherapy treat your pain?',
             'section'     => 'info'
         ];
 
@@ -496,39 +469,18 @@ class ChiroQuiz
             'section'     => 'info'
         ];
 
-        $fields['area'] = [
-            'name'        => __('Quiz Area', $this->token),
-            'description' => __('Question 4 requires you to define your area. Select to display your county or city.', $this->token),
-            'placeholder' => '',
-            'type'        => 'select',
-            'default'     => '',
-            'options'     => ['county', 'city', 'state', 'custom'],
-            'section'     => 'info'
-        ];
-
-        $fields['area_custom'] = [
-            'name'        => __('Custom Quiz Area', $this->token),
-            'description' => __('', $this->token),
-            'placeholder' => '',
-            'type'        => 'hidden',
-            'default'     => '',
-            'options'     => '',
-            'section'     => 'info'
-        ];
-
-        $fields['closing'] = [
-            'name'        => __('Show Split Closing Costs Question?', $this->token),
-            'description' => __('One quiz question assumes that you split closing costs with your buyer. ', $this->token),
-            'placeholder' => '',
-            'type'        => 'select',
-            'default'     => '',
-            'options'     => ['no', 'yes'],
-            'section'     => 'info'
-        ];
-
         $fields['legal_broker'] = [
-            'name'        => __('Your Legal Broker', $this->token),
+            'name'        => __('Your Business Name', $this->token),
             'description' => __('This will be displayed on the bottom of each page.', $this->token),
+            'placeholder' => '',
+            'type'        => 'text',
+            'default'     => '',
+            'section'     => 'info'
+        ];
+
+        $fields['api_key'] = [
+            'name'        => __('Custom API Key', $this->token),
+            'description' => __('This API key will be used for submitting leads to your CRM. Leave blank to use default API key.', $this->token),
             'placeholder' => '',
             'type'        => 'text',
             'default'     => '',
@@ -580,7 +532,7 @@ class ChiroQuiz
             'section'     => 'info'
         ];
 
-        return apply_filters($this->token . '_valuation_fields', $fields);
+        return apply_filters($this->token . '_fields', $fields);
     }
 
     /**

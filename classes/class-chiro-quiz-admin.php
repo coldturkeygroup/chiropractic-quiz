@@ -53,11 +53,6 @@ class ChiroQuiz_Admin
      */
     public function add_menu_item()
     {
-        add_submenu_page('edit.php?post_type=' . $this->token, 'Leads', 'Leads', 'manage_options', $this->token . '_leads', [
-            $this,
-            'leads_page'
-        ]);
-
         add_submenu_page('edit.php?post_type=' . $this->token, 'Chiro Quiz Settings', 'Settings', 'manage_options', $this->token . '_settings', [
             $this,
             'settings_page'
@@ -216,10 +211,12 @@ class ChiroQuiz_Admin
     public function crm_source_field()
     {
         $data = get_option($this->token . '_crm_source');
+        $data == 'chirocrm' ? $chiro_selected = 'selected' : $chiro_selected = '';
+        $data == 'platformcrm' ? $platform_selected = 'selected' : $platform_selected = '';
 
         echo '<select id="crm_source" name="' . $this->token . '_crm_source">
-                <option value="chirocrm">Chiro CRM</option>
-                <option value="platformcrm">Platform CRM</option>
+                <option ' . $chiro_selected . ' value="chirocrm">Chiro CRM</option>
+                <option ' . $platform_selected . ' value="platformcrm">Platform CRM</option>
               </select>
         			<label for="crm_source"><span class="description">' . __('Choose which CRM to sync your leads with.', $this->token) . '</span></label>';
     }
@@ -290,108 +287,4 @@ class ChiroQuiz_Admin
 					</form>
 			  </div>';
     }
-
-    /**
-     * Create the actual HTML structure
-     * for the Leads page for the plugin
-     *
-     */
-    public function leads_page()
-    {
-        global $wpdb;
-        $blog_id = get_current_blog_id();
-        $table_name = $wpdb->base_prefix . $this->token;
-
-        if (isset($_GET['lead_type']) && $_GET['lead_type'] == 'complete') {
-            $leads = $wpdb->get_results("SELECT DISTINCT * FROM `$table_name` WHERE `blog_id` = '$blog_id' AND `phone` is not null ORDER BY `id` DESC");
-        } else {
-            $leads = $wpdb->get_results("SELECT DISTINCT * FROM `$table_name` WHERE `blog_id` = '$blog_id' ORDER BY `id` DESC");
-        }
-
-        ?>
-      <div class="wrap" id="<?= $this->token ?>_leads">
-        <h1>Chiro Quiz Leads</h1>
-
-          <?php
-          if (isset($_GET['deleted']) && $_GET['deleted'] == true) {
-              echo '<div class="updated">
-	      				<p>The requested leads have been deleted!</p>
-							</div>';
-          }
-          ?>
-
-        <ul id="settings-sections" class="subsubsub hide-if-no-js" style="margin-bottom:15px;">
-          <li><a class="tab all <? if (!isset($_GET['lead_type'])) {
-                  echo 'current';
-              } ?>" href="edit.php?post_type=<?= $this->token ?>&page=<?= $this->token ?>_leads">All Leads</a> |
-          </li>
-          <li><a class="tab <? if (isset($_GET['lead_type'])) {
-                  echo 'current';
-              } ?>" href="edit.php?post_type=<?= $this->token ?>&page=<?= $this->token ?>_leads&lead_type=complete">Complete
-              Leads</a>
-          </li>
-        </ul>
-
-        <form id="leads_form" method="post" action="admin-post.php">
-          <input type="hidden" name="action" value="<?= $this->token ?>_remove_leads">
-            <?php wp_nonce_field($this->token . '_remove_leads'); ?>
-          <table class="widefat fixed" style="margin-bottom:5px" cellspacing="0">
-            <thead>
-            <tr>
-              <th scope="col" class="manage-column entry_nowrap" style="width: 2.2em;"></th>
-              <th scope="col" class="manage-column entry_nowrap">Name</th>
-              <th scope="col" class="manage-column entry_nowrap">Email</th>
-              <th scope="col" class="manage-column entry_nowrap">Address</th>
-              <th scope="col" class="manage-column entry_nowrap" style="width: 4em;">Unit #</th>
-              <th scope="col" class="manage-column entry_nowrap">Phone</th>
-              <th scope="col" class="manage-column entry_nowrap">Score</th>
-              <th scope="col" class="manage-column entry_nowrap">Submitted</th>
-            </tr>
-            </thead>
-            <tbody class="user-list">
-            <?php
-            $i = 0;
-            foreach ($leads as $lead) {
-                $name = $lead->first_name;
-                if ($lead->last_name != null) {
-                    $name .= ' ' . $lead->last_name;
-                }
-                $alternate = 'alternate';
-                if ($i % 2 === 0) {
-                    $alternate = '';
-                }
-                $i++;
-
-                echo '<tr class="author-self status-inherit lead_unread ' . $alternate . '" valign="top">
-				      					<td><input type="checkbox" name="delete_lead[]" value="' . $lead->id . '"></td>
-				      					<td class="entry_nowrap">' . $name . '</td>
-				      					<td class="entry_nowrap">' . $lead->email . '</td>
-				      					<td class="entry_nowrap">' . $lead->address . '</td>
-				      					<td class="entry_nowrap">' . $lead->address2 . '</td>
-				      					<td class="entry_nowrap">' . $lead->phone . '</td>
-				      					<td class="entry_nowrap">' . $lead->score . '</td>
-				      					<td class="entry_nowrap">' . date("M j Y, h:i:a", strtotime($lead->created_at)) . '</td>
-				      				</tr>';
-            }
-            ?>
-            </tbody>
-            <tfoot>
-            <tr>
-              <th scope="col" class="manage-column entry_nowrap"></th>
-              <th scope="col" class="manage-column entry_nowrap">Name</th>
-              <th scope="col" class="manage-column entry_nowrap">Email</th>
-              <th scope="col" class="manage-column entry_nowrap">Address</th>
-              <th scope="col" class="manage-column entry_nowrap">Unit #</th>
-              <th scope="col" class="manage-column entry_nowrap">Phone</th>
-              <th scope="col" class="manage-column entry_nowrap">Score</th>
-              <th scope="col" class="manage-column entry_nowrap">Submitted</th>
-            </tr>
-            </tfoot>
-          </table>
-          <input type="submit" class="button" value="Delete Selected Leads">
-        </form>
-      </div>
-        <?php
-    }
-
 }
