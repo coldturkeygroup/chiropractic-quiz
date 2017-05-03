@@ -26,12 +26,28 @@ class FrontDesk
     public function __construct()
     {
         $this->api_source = get_option('pf_chiro_quiz_crm_source', 'platformcrm');
-        $this->api_key = get_option('pf_chiro_quiz_frontdesk_key');
         $this->api_base = 'https://' . $this->api_source . '.com/api/v' . $this->api_version . '/';
+        $this->api_key = get_option('pf_chiro_quiz_frontdesk_key');
         $this->guzzle = new Client();
 
         // Display admin notices when required
         add_action('admin_notices', [$this, 'adminNotices']);
+    }
+
+    /**
+     * Set the FrontDesk API Key
+     *
+     * @param $api_key
+     *
+     * @return $this
+     */
+    public function setApiKey($api_key)
+    {
+        if ($api_key != false && $api_key != null && $api_key != '') {
+            $this->api_key = $api_key;
+        }
+
+        return $this;
     }
 
     /**

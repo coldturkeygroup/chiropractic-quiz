@@ -608,12 +608,14 @@ class ChiroQuiz
         if (($_POST['post_status'] != 'publish') || ($_POST['original_post_status'] == 'publish')) {
             $campaign_id = get_post_meta($post_ID, 'frontdesk_campaign', true);
             if ($campaign_id != '' && is_int($campaign_id)) {
-                $this->frontdesk->updateCampaign($campaign_id, get_the_title($post_ID), $permalink);
+                $this->frontdesk->setApiKey(get_post_meta($post_ID, 'api_key', true))
+                                ->updateCampaign($campaign_id, get_the_title($post_ID), $permalink);
             }
 
             return true;
         }
-        $campaign_id = $this->frontdesk->createCampaign(get_the_title($post_ID), $permalink);
+        $campaign_id = $this->frontdesk->setApiKey(get_post_meta($post_ID, 'api_key', true))
+                                       ->createCampaign(get_the_title($post_ID), $permalink);
         if (is_int($campaign_id)) {
             update_post_meta($post_ID, 'frontdesk_campaign', $campaign_id);
         }
@@ -628,19 +630,23 @@ class ChiroQuiz
      */
     protected function score_quiz($score)
     {
+        if ($score < 89) {
+            $score = 90;
+        }
+
         $feedback = [
             [
-                'Since you scored under 75 out of a possible 88, <em>chirotherapy probably isn\'t for you.</em>',
+                'Since you scored under 75 out of a possible 100, <em>chirotherapy probably isn\'t for you.</em>',
                 0,
                 75
             ],
             [
-                'Congrats! Since you scored between 76 and 85, <em>chirotherapy may help treat your pain!</em>',
+                'Congrats! Since you scored between 76 and 100, <em>chirotherapy may help treat your pain!</em>',
                 76,
                 85
             ],
             [
-                'Congrats! Since you scored over 86, <em>chirotherapy can definitely help treat your pain!</em>',
+                'Congrats! Since you scored over 89, <em>chirotherapy can definitely help treat your pain!</em>',
                 86,
                 300
             ]
@@ -749,11 +755,12 @@ class ChiroQuiz
             $user_id = $wpdb->insert_id;
 
             // Create the prospect on FrontDesk
-            $frontdesk_id = $this->frontdesk->createProspect([
-                'campaign_id' => $frontdesk_campaign,
-                'first_name'  => $first_name,
-                'email'       => $email
-            ]);
+            $frontdesk_id = $this->frontdesk->setApiKey(get_post_meta($quiz_id, 'api_key', true))
+                                            ->createProspect([
+                                                'campaign_id' => $frontdesk_campaign,
+                                                'first_name'  => $first_name,
+                                                'email'       => $email
+                                            ]);
 
             if ($frontdesk_id != null) {
                 $wpdb->query($wpdb->prepare(
@@ -769,11 +776,11 @@ class ChiroQuiz
             // Create a note for the FrontDesk prospect
             if ($frontdesk_id !== null) {
                 $responses = $this->formatResponses($quiz_id, $_POST['questions']);
-                $content = '<p><strong>Quiz Score:</strong> ' . $score['score'] . '/88</p>';
+                $content = '<p><strong>Quiz Score:</strong> ' . $score['score'] . '/100</p>';
                 foreach ($responses as $response) {
                     $content .= '<p><strong>' . $response['question'] . '</strong><br> ' . $response['answer'] . '</p>';
                 }
-                $this->frontdesk->createNote($frontdesk_id, 'Chiro Quiz Responses', stripslashes($content));
+                $this->frontdesk->setApiKey(get_post_meta($quiz_id, 'api_key', true))->createNote($frontdesk_id, 'Chiro Quiz Responses', stripslashes($content));
             }
 
             // Email the blog owner the details for the new prospect
@@ -796,6 +803,7 @@ class ChiroQuiz
     {
         if (isset($_POST[$this->token . '_nonce']) && wp_verify_nonce($_POST[$this->token . '_nonce'], $this->token . '_submit_offer')) {
             global $wpdb;
+            $quiz_id = sanitize_text_field($_POST['quiz_id']);
             $user_id = sanitize_text_field($_POST['user_id']);
             $last_name = sanitize_text_field($_POST['last_name']);
             $address = sanitize_text_field($_POST['address']);
@@ -810,16 +818,17 @@ class ChiroQuiz
 
             // Update the FrontDesk prospect if exists
             if ($subscriber->frontdesk_id != null) {
-                $this->frontdesk->updateProspect($subscriber->frontdesk_id, [
-                    'email'     => $subscriber->email,
-                    'last_name' => $last_name,
-                    'address'   => $address,
-                    'address_2' => $address_2,
-                    'city'      => $city,
-                    'state'     => $state,
-                    'zip_code'  => $zip_code,
-                    'phone'     => $phone
-                ]);
+                $this->frontdesk->setApiKey(get_post_meta($quiz_id, 'api_key', true))
+                                ->updateProspect($subscriber->frontdesk_id, [
+                                    'email'     => $subscriber->email,
+                                    'last_name' => $last_name,
+                                    'address'   => $address,
+                                    'address_2' => $address_2,
+                                    'city'      => $city,
+                                    'state'     => $state,
+                                    'zip_code'  => $zip_code,
+                                    'phone'     => $phone
+                                ]);
             }
 
             // Update the prospect data
