@@ -164,7 +164,7 @@ jQuery(function ($) {
 
                             fbq('init', conversion);
                             fbq('track', 'PageView');
-                            fbq('track', 'Lead');
+                            fbq('track', 'CompleteRegistration');
                         }
                     }, 1000);
                 }
