@@ -399,7 +399,7 @@
                                 <tr>
                                     <td align="center" valign="top" class="bodyContent" style="padding: 10px 30px 0;font-family: Verdana, Arial, Helvetica, sans-serif;text-align: left;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #3A3A3A;font-size: 16px;font-weight: normal;line-height: 169%;-webkit-font-smoothing: antialiased;">
                     <span class="notlook">
-						<p><strong>Quiz Score:</strong> <?= $score ?>/88</p>
+						<p><strong>Quiz Score:</strong> <?= $score ?>/100</p>
                         <?php foreach ($responses as $response) { ?>
                             <p>
                                 <strong><?= $response['question'] ?></strong><br>
