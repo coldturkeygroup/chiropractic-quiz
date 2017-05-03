@@ -16,21 +16,18 @@ class FrontDesk
 {
     protected $api_url;
     protected $api_key;
-    protected $api_version;
+    protected $api_version = 1;
     protected $api_base;
     protected $guzzle;
 
     /**
      * Basic constructor for the FrontDesk class
-     *
-     * @param int $api_version
      */
-    public function __construct($api_version = 1)
+    public function __construct()
     {
         $this->api_source = get_option('pf_chiro_quiz_crm_source', 'platformcrm');
         $this->api_key = get_option('pf_chiro_quiz_frontdesk_key');
-        $this->api_version = $api_version;
-        $this->api_base = 'https://' . $this->api_source . '.com/api/v' . $api_version . '/';
+        $this->api_base = 'https://' . $this->api_source . '.com/api/v' . $this->api_version . '/';
         $this->guzzle = new Client();
 
         // Display admin notices when required
