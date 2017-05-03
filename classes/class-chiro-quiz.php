@@ -641,12 +641,12 @@ class ChiroQuiz
                 75
             ],
             [
-                'Congrats! Since you scored between 76 and 100, <em>chirotherapy may help treat your pain!</em>',
+                'Good news! Since you scored between 76 and 100, <em>chirotherapy may help treat your pain!</em>',
                 76,
                 85
             ],
             [
-                'Congrats! Since you scored over 89, <em>chirotherapy can definitely help treat your pain!</em>',
+                'Good news! Since you scored over 89, <em>chirotherapy can definitely help treat your pain!</em>',
                 86,
                 300
             ]
