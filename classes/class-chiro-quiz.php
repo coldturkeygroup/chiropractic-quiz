@@ -460,8 +460,8 @@ class ChiroQuiz
         ];
 
         $fields['show_fields'] = [
-            'name'        => __('Show Opt-In Fields', $this->token),
-            'description' => __('If set to no, opt-in fields will not be shown, and users will be shown their score and prompted to fill out the Home Valuator.', $this->token),
+            'name'        => __('Show Opt-In Before Score', $this->token),
+            'description' => __('If set to no, opt-in fields will be shown after the users see their score.', $this->token),
             'placeholder' => '',
             'type'        => 'select',
             'default'     => 'yes',

@@ -1,6 +1,8 @@
 jQuery(function ($) {
     jQuery('document').ready(function ($) {
-        _paq.push(['trackEvent', 'Quiz', 'Unique Visitor']);
+        if(typeof _paq !== 'undefined') {
+            _paq.push(['trackEvent', 'Quiz', 'Unique Visitor']);
+        }
 
         // Simple AJAX listeners
         $(document).bind("ajaxSend", function () {
@@ -13,7 +15,10 @@ jQuery(function ($) {
         updateProgressBar(1);
         $('.footer').addClass('animated fadeOutDown');
         $('.footer-quiz').addClass('animated fadeInUpBig').show();
-        _paq.push(['trackEvent', 'Quiz', 'Started']);
+
+        if(typeof _paq !== 'undefined') {
+            _paq.push(['trackEvent', 'Quiz', 'Started']);
+        }
 
         setTimeout(function () {
             $('.footer').hide();
@@ -105,9 +110,12 @@ jQuery(function ($) {
     });
 
     // Show quiz results modal
-    $('#get-results').click(function () {
+    $('body').on('click', '#get-results', function () {
         $('#quiz-results').modal('show');
-        _paq.push(['trackEvent', 'Quiz', 'Opened Modal']);
+
+        if(typeof _paq !== 'undefined') {
+            _paq.push(['trackEvent', 'Quiz', 'Opened Modal']);
+        }
 
         return false;
     });
@@ -147,50 +155,13 @@ jQuery(function ($) {
                         }
                         $('.quiz-page').animate({'padding-top': '6%'}, 500);
 
-                        var retargeting = $('#retargeting').val();
                         var conversion = $('#conversion').val();
-                        if (retargeting != '') {
-                            !function (f, b, e, v, n, t, s) {
-                                if (f.fbq)return;
-                                n = f.fbq = function () {
-                                    n.callMethod ?
-                                        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-                                };
-                                if (!f._fbq) f._fbq = n;
-                                n.push = n;
-                                n.loaded = !0;
-                                n.version = '2.0';
-                                n.queue = [];
-                                t = b.createElement(e);
-                                t.async = !0;
-                                t.src = v;
-                                s = b.getElementsByTagName(e)[0];
-                                s.parentNode.insertBefore(t, s)
-                            }(window,
-                                document, 'script', '//connect.facebook.net/en_US/fbevents.js');
-
-                            fbq('init', retargeting);
-                            fbq('track', 'PageView');
-                        }
                         if (conversion != '') {
-                            !function (f, b, e, v, n, t, s) {
-                                if (f.fbq)return;
-                                n = f.fbq = function () {
-                                    n.callMethod ?
-                                        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-                                };
-                                if (!f._fbq) f._fbq = n;
-                                n.push = n;
-                                n.loaded = !0;
-                                n.version = '2.0';
-                                n.queue = [];
-                                t = b.createElement(e);
-                                t.async = !0;
-                                t.src = v;
-                                s = b.getElementsByTagName(e)[0];
-                                s.parentNode.insertBefore(t, s)
-                            }(window,
-                                document, 'script', '//connect.facebook.net/en_US/fbevents.js');
+                            !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                            n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+                            n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+                            t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+                            document,'script','//connect.facebook.net/en_US/fbevents.js');
 
                             fbq('init', conversion);
                             fbq('track', 'PageView');
@@ -243,6 +214,7 @@ jQuery(function ($) {
     // Show quiz results
     function showResults() {
         var form = $('#chiro-quiz');
+        var broker = $('#broker').val();
 
         $.ajax({
             type: 'POST',
@@ -254,40 +226,8 @@ jQuery(function ($) {
                 $('#quiz-back').hide();
 
                 setTimeout(function () {
-                    $('#offer').html('<h2 class="quiz-completed"><i class="fa fa-check-circle"></i> <br> <strong>You scored ' + response.score + '/100</strong><br><small>' + response.feedback + '</small></h2>');
-                    if (typeof $('#valuator-link').val() != 'undefined') {
-                        $('#offer').html('<h2 class="quiz-completed"><i class="fa fa-check-circle"></i> <br> <strong>You scored ' + response.score + '/100</strong><br><small>' + response.feedback + '</small></h2> <a href="' + $('#valuator-link').val() + '" class="btn btn-primary btn-lg" id="show-offer">Click Here To See What Your Home Is Worth <br> <small>(Based On Official Data of Recently Sold Listings In Your Area)</small></a>');
-                    }
+                    $('#offer').html('<h2 class="quiz-completed"><i class="fa fa-check-circle"></i> <br> <strong>You scored ' + response.score + '/100</strong></h2><h4>' + response.feedback + '<br><br><strong>You are eligible for free chirotherapy at ' + broker + '.<br>Click below for more info.</strong></h4><button class="btn btn-primary btn-lg" id="get-results">Send Me The Details!</button>');
                     $('.quiz-page').animate({'padding-top': '6%'}, 500);
-
-                    var retargeting = $('#retargeting').val(),
-                        conversion = $('#conversion').val();
-                    if (conversion != '') {
-                        if (conversion !== retargeting) {
-                            !function (f, b, e, v, n, t, s) {
-                                if (f.fbq)return;
-                                n = f.fbq = function () {
-                                    n.callMethod ?
-                                        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-                                };
-                                if (!f._fbq) f._fbq = n;
-                                n.push = n;
-                                n.loaded = !0;
-                                n.version = '2.0';
-                                n.queue = [];
-                                t = b.createElement(e);
-                                t.async = !0;
-                                t.src = v;
-                                s = b.getElementsByTagName(e)[0];
-                                s.parentNode.insertBefore(t, s)
-                            }(window,
-                                document, 'script', '//connect.facebook.net/en_US/fbevents.js');
-
-                            fbq('init', conversion);
-                        }
-
-                        fbq('track', "Lead");
-                    }
                 }, 1000);
             }
         });
@@ -318,7 +258,7 @@ jQuery(function ($) {
             }
         }
 
-        if (step != '') {
+        if (step != '' && typeof _paq !== 'undefined') {
             _paq.push(['trackEvent', 'Quiz', 'Answered Question', step]);
         }
 

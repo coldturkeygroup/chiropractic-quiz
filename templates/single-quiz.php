@@ -1530,6 +1530,7 @@ if ($hover_setting && strlen($hover_setting) > 0 && $hover_setting != '') {
         </div>
       </div>
 
+      <input type="hidden" id="broker" value="<?= $broker ?>">
       <div class="footer"><?php echo $broker;
           if (isset($phone) && $phone != null) {
               echo ' &middot; ' . $phone;
@@ -1558,8 +1559,11 @@ if ($hover_setting && strlen($hover_setting) > 0 && $hover_setting != '') {
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-body">
-              <h3>Awesome! Your quiz results have been calculated. <br> Where should we email your results?
-              </h3>
+              <?php if (isset($show_fields) && $show_fields == 'no') { ?>
+                <h3 style="font-size:20px;line-height:24px">You are eligible for free chirotherapy at <?= $broker ?>.</h3>
+              <?php } else { ?>
+                <h3 style="font-size:20px;line-height:24px">Awesome! Your quiz results have been calculated. <br> Where should we email your results?</h3>
+              <?php } ?>
 
               <div class="form-group">
                 <label for="first_name" class="control-label sr-only">First Name</label>
@@ -1575,7 +1579,11 @@ if ($hover_setting && strlen($hover_setting) > 0 && $hover_setting != '') {
                 <?php wp_nonce_field($token . '_submit_quiz', $token . '_nonce'); ?>
               <input name="quiz_id" type="hidden" value="<?= $id ?>">
 
-              <input type="submit" class="btn btn-primary btn-lg" id="submit-results" value="Get My Results!">
+                <?php if (isset($show_fields) && $show_fields == 'no') { ?>
+                  <input type="submit" class="btn btn-primary btn-lg" id="submit-results" value="Send Me The Details!">
+                <?php } else { ?>
+                  <input type="submit" class="btn btn-primary btn-lg" id="submit-results" value="Get My Results!">
+                <?php } ?>
             </div>
           </div>
         </div>
@@ -1587,32 +1595,17 @@ if ($hover_setting && strlen($hover_setting) > 0 && $hover_setting != '') {
         ?>
       <!-- Facebook Pixel Code -->
       <script>
-          !function (f, b, e, v, n, t, s) {
-              if (f.fbq)return;
-              n = f.fbq = function () {
-                  n.callMethod ?
-                      n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-              };
-              if (!f._fbq) f._fbq = n;
-              n.push = n;
-              n.loaded = !0;
-              n.version = '2.0';
-              n.queue = [];
-              t = b.createElement(e);
-              t.async = !0;
-              t.src = v;
-              s = b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t, s)
-          }(window,
-              document, 'script', '//connect.facebook.net/en_US/fbevents.js');
+          !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+          n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+          document,'script','//connect.facebook.net/en_US/fbevents.js');
 
           fbq('init', '<?= $retargeting ?>');
-          fbq('track', "PageView");</script>
-      <noscript><img height="1" width="1" style="display:none"
-                     src="https://www.facebook.com/tr?id=<?= $retargeting ?>&ev=PageView&noscript=1"
-        /></noscript>
-        <?php
-        echo '<input type="hidden" id="retargeting" value="' . $retargeting . '">';
+          fbq('track', 'PageView');
+      </script>
+      <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=<?= $retargeting ?>&ev=PageView&noscript=1"/></noscript>
+      <?php
     }
 
     if ($conversion != '') {
