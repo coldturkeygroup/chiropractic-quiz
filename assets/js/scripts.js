@@ -1,5 +1,7 @@
 jQuery(function ($) {
     jQuery('document').ready(function ($) {
+        _paq.push(['trackEvent', 'Quiz', 'Unique Visitor']);
+
         // Simple AJAX listeners
         $(document).bind("ajaxSend", function () {
             $('.btn-primary').attr('disabled', 'disabled');
@@ -11,6 +13,7 @@ jQuery(function ($) {
         updateProgressBar(1);
         $('.footer').addClass('animated fadeOutDown');
         $('.footer-quiz').addClass('animated fadeInUpBig').show();
+        _paq.push(['trackEvent', 'Quiz', 'Started']);
 
         setTimeout(function () {
             $('.footer').hide();
@@ -104,6 +107,7 @@ jQuery(function ($) {
     // Show quiz results modal
     $('#get-results').click(function () {
         $('#quiz-results').modal('show');
+        _paq.push(['trackEvent', 'Quiz', 'Opened Modal']);
 
         return false;
     });
@@ -312,6 +316,10 @@ jQuery(function ($) {
                 $('.back_pain-page, .neck_pain-page, .joint-page, .migraines-page').removeClass('page');
                 $('.back_pain-question, .neck_pain-question, .joint-question, .migraines-question').attr('disabled', 'disabled');
             }
+        }
+
+        if (step != '') {
+            _paq.push(['trackEvent', 'Quiz', 'Answered Question', step]);
         }
 
         var next = active.nextAll('.page').first();
