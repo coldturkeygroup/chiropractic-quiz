@@ -63,7 +63,7 @@ class ChiroQuiz
             ], 10, 1);
             add_filter('enter_title_here', [$this, 'change_default_title']);
             // Create FrontDesk Campaigns for pages
-            add_action('publish_pf_chiro_quiz', [$this, 'create_frontdesk_campaign']);
+            add_action('publish_pf_chiro_quiz', [$this, 'create_frontdesk_campaign'], 10, 2);
         }
 
         // Flush rewrite rules on plugin activation
@@ -590,6 +590,10 @@ class ChiroQuiz
 
         global $wpdb;
         $permalink = get_permalink($post_ID);
+        $api_key = get_post_meta($post_ID, 'api_key', true);
+        if ($api_key == '') {
+            $api_key = $_POST['api_key'];
+        }
 
         // See if we're using domain mapping
         $wpdb->dmtable = $wpdb->base_prefix . 'domain_mapping';
@@ -607,14 +611,15 @@ class ChiroQuiz
 
         if (($_POST['post_status'] != 'publish') || ($_POST['original_post_status'] == 'publish')) {
             $campaign_id = get_post_meta($post_ID, 'frontdesk_campaign', true);
+
             if ($campaign_id != '' && is_int($campaign_id)) {
-                $this->frontdesk->setApiKey(get_post_meta($post_ID, 'api_key', true))
+                $this->frontdesk->setApiKey($api_key)
                                 ->updateCampaign($campaign_id, get_the_title($post_ID), $permalink);
             }
 
             return true;
         }
-        $campaign_id = $this->frontdesk->setApiKey(get_post_meta($post_ID, 'api_key', true))
+        $campaign_id = $this->frontdesk->setApiKey($api_key)
                                        ->createCampaign(get_the_title($post_ID), $permalink);
         if (is_int($campaign_id)) {
             update_post_meta($post_ID, 'frontdesk_campaign', $campaign_id);
