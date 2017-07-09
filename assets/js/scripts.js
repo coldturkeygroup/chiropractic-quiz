@@ -26,9 +26,9 @@ jQuery(function ($) {
     });
 
     // Email Validation
-    if (ChiroQuiz.mailgun !== undefined && ChiroQuiz.mailgun !== null) {
-        $('#email').mailgun_validator({
-            api_key: ChiroQuiz.mailgun,
+    if (ChiroQuiz.platformvalidator !== undefined && ChiroQuiz.platformvalidator !== null) {
+        $('#email').platform_email_validator({
+            api_key: ChiroQuiz.platformvalidator,
             in_progress: function () {
                 $('#email').parent().removeClass('has-warning has-error');
                 $(".mailcheck-suggestion").remove();
@@ -69,7 +69,7 @@ jQuery(function ($) {
 
     $(".form-group").on("click", ".mailcheck-suggestion a", function (e) {
         e.preventDefault();
-        $("#email").val($(this).text());
+        $("#email").val($(this).text()).parent().removeClass('has-warning has-error');
         $("[type=submit]").removeClass("disabled").removeAttr("disabled");
         $(".mailcheck-suggestion").remove();
     });
