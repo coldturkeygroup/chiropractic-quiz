@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Chiropractic Quiz
- * Version: 1.0.13
+ * Version: 1.0.14
  * Plugin URI: https://platform.marketing/
  * Description: Simple chiropractic lead generation through a quiz that helps qualify prospective patients.
  * Author: Platform Marketing
@@ -14,20 +14,24 @@
  * @since 1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if (!defined('ABSPATH')) {
+    exit;
+}
 
-if ( ! defined( 'CHIRO_QUIZ_PLUGIN_PATH' ) )
-	define( 'CHIRO_QUIZ_PLUGIN_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
+if (!defined('CHIRO_QUIZ_PLUGIN_PATH')) {
+    define('CHIRO_QUIZ_PLUGIN_PATH', trailingslashit(plugin_dir_path(__FILE__)));
+}
 
-if ( ! defined( 'CHIRO_QUIZ_PLUGIN_VERSION' ) )
-	define( 'CHIRO_QUIZ_PLUGIN_VERSION', '1.0.13' );
+if (!defined('CHIRO_QUIZ_PLUGIN_VERSION')) {
+    define('CHIRO_QUIZ_PLUGIN_VERSION', '1.0.14');
+}
 
-require_once( 'classes/class-chiro-quiz.php' );
+require_once('classes/class-chiro-quiz.php');
 
 global $chiro_quiz;
-$chiro_quiz = new ColdTurkey\ChiroQuiz\ChiroQuiz( __FILE__ );
+$chiro_quiz = new ColdTurkey\ChiroQuiz\ChiroQuiz(__FILE__);
 
-if ( is_admin() ) {
-	require_once( 'classes/class-chiro-quiz-admin.php' );
-	$chiro_quiz_admin = new ColdTurkey\ChiroQuiz\ChiroQuiz_Admin( __FILE__ );
+if (is_admin()) {
+    require_once('classes/class-chiro-quiz-admin.php');
+    $chiro_quiz_admin = new ColdTurkey\ChiroQuiz\ChiroQuiz_Admin(__FILE__);
 }
