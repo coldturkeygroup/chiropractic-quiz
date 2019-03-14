@@ -16,7 +16,7 @@ class FrontDesk
 {
     protected $api_url;
     protected $api_key;
-    protected $api_version = 1;
+    protected $api_version = 2;
     protected $api_base;
     protected $guzzle;
 
@@ -92,7 +92,7 @@ class FrontDesk
     public function updateCampaign($id, $title, $permalink)
     {
         if ($this->api_key != null || $this->api_key != '') {
-            $this->guzzle->post($this->api_base . 'campaigns/' . $id, [
+            $this->guzzle->patch($this->api_base . 'campaigns/' . $id, [
                 'form_params' => [
                     'key'    => $this->api_key,
                     'title'  => $title,
@@ -114,10 +114,10 @@ class FrontDesk
     {
         try {
             if ($this->api_key != null || $this->api_key != '') {
-                $response = $this->guzzle->post($this->api_base . 'subscribers/', [
+                $response = $this->guzzle->post($this->api_base . 'subscribers/complete', [
                     'form_params' => [
                         'key'         => $this->api_key,
-                        'campaign_id' => $data['campaign_id'],
+                        'campaigns'   => $data['campaign_id'],
                         'email'       => $data['email'],
                         'first_name'  => $data['first_name']
                     ]
@@ -145,10 +145,9 @@ class FrontDesk
     {
         try {
             if ($this->api_key != null || $this->api_key != '') {
-                $response = $this->guzzle->post($this->api_base . 'subscribers/update/', [
+                $response = $this->guzzle->patch($this->api_base . 'subscribers/' . $id, [
                     'form_params' => [
                         'key'       => $this->api_key,
-                        'id'        => $id,
                         'email'     => $data['email'],
                         'last_name' => $data['last_name'],
                         'address'   => $data['address'],
@@ -182,7 +181,7 @@ class FrontDesk
     {
         try {
             if ($this->api_key != null || $this->api_key != '') {
-                $response = $this->guzzle->post($this->api_base . 'subscribers/note/', [
+                $response = $this->guzzle->post($this->api_base . 'subscribers/notes/', [
                     'form_params' => [
                         'key'           => $this->api_key,
                         'subscriber_id' => $id,
