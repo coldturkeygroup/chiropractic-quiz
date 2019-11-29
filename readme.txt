@@ -3,7 +3,7 @@ Contributors: Aaron Huisinga
 Tags: chiropractic, platform, chiro quiz
 Requires at least: 4.0
 Tested up to: 5.1
-Stable tag: 1.0.15
+Stable tag: 1.0.16
 
 Simple chiropractic lead generation through a quiz that helps qualify prospective patients.
 

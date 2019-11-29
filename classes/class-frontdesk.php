@@ -16,7 +16,7 @@ class FrontDesk
 {
     protected $api_url;
     protected $api_key;
-    protected $api_version = 2;
+    protected $api_version = 3;
     protected $api_base;
     protected $guzzle;
 
@@ -63,13 +63,15 @@ class FrontDesk
             if ($this->api_key != null || $this->api_key != '') {
                 $response = $this->guzzle->post($this->api_base . 'campaigns/', [
                     'form_params' => [
-                        'key'         => $this->api_key,
                         'title'       => $title,
                         'description' => 'Campaign for Platform Chiro Quiz',
                         'type'        => 'Platform',
                         'total_cost'  => '10000',
                         'source'      => $permalink
-                    ]
+                    ],
+                    'headers'     => [
+                        'Authorization' => 'Bearer ' . $this->api_key,
+                    ],
                 ]);
 
                 add_filter('redirect_post_location', [$this, 'add_success_var'], 99);
@@ -94,10 +96,12 @@ class FrontDesk
         if ($this->api_key != null || $this->api_key != '') {
             $this->guzzle->patch($this->api_base . 'campaigns/' . $id, [
                 'form_params' => [
-                    'key'    => $this->api_key,
                     'title'  => $title,
                     'source' => $permalink
-                ]
+                ],
+                'headers'     => [
+                    'Authorization' => 'Bearer ' . $this->api_key,
+                ],
             ]);
         }
     }
@@ -114,13 +118,15 @@ class FrontDesk
     {
         try {
             if ($this->api_key != null || $this->api_key != '') {
-                $response = $this->guzzle->post($this->api_base . 'subscribers/complete', [
+                $response = $this->guzzle->post($this->api_base . 'subscribers', [
                     'form_params' => [
-                        'key'         => $this->api_key,
-                        'campaigns'   => $data['campaign_id'],
-                        'email'       => $data['email'],
-                        'first_name'  => $data['first_name']
-                    ]
+                        'campaigns'  => $data['campaign_id'],
+                        'email'      => $data['email'],
+                        'first_name' => $data['first_name']
+                    ],
+                    'headers'     => [
+                        'Authorization' => 'Bearer ' . $this->api_key,
+                    ],
                 ]);
 
                 return json_decode($response->getBody(), true)['data']['id'];
@@ -147,7 +153,6 @@ class FrontDesk
             if ($this->api_key != null || $this->api_key != '') {
                 $response = $this->guzzle->patch($this->api_base . 'subscribers/' . $id, [
                     'form_params' => [
-                        'key'       => $this->api_key,
                         'email'     => $data['email'],
                         'last_name' => $data['last_name'],
                         'address'   => $data['address'],
@@ -156,7 +161,10 @@ class FrontDesk
                         'state'     => $data['state'],
                         'zip_code'  => $data['zip_code'],
                         'phone'     => $data['phone']
-                    ]
+                    ],
+                    'headers'     => [
+                        'Authorization' => 'Bearer ' . $this->api_key,
+                    ],
                 ]);
 
                 return json_decode($response->getBody(), true)['data']['id'];
@@ -183,11 +191,13 @@ class FrontDesk
             if ($this->api_key != null || $this->api_key != '') {
                 $response = $this->guzzle->post($this->api_base . 'subscribers/notes/', [
                     'form_params' => [
-                        'key'           => $this->api_key,
                         'subscriber_id' => $id,
                         'title'         => $title,
                         'content'       => $content
-                    ]
+                    ],
+                    'headers'     => [
+                        'Authorization' => 'Bearer ' . $this->api_key,
+                    ],
                 ]);
 
                 return json_decode($response->getBody(), true)['data']['id'];

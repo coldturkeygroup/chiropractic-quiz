@@ -432,8 +432,7 @@ class ChiroQuiz
             wp_enqueue_script('platform-email-validator');
 
             $localize = [
-                'ajaxurl'           => admin_url('admin-ajax.php'),
-                'platformvalidator' => defined('MAILGUN_PUBLIC') ? MAILGUN_PUBLIC : ''
+                'ajaxurl' => admin_url('admin-ajax.php'),
             ];
             wp_localize_script($this->token . '-js', 'ChiroQuiz', $localize);
         }

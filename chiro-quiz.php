@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Chiropractic Quiz
- * Version: 1.0.15
+ * Version: 1.0.16
  * Plugin URI: https://platform.marketing/
  * Description: Simple chiropractic lead generation through a quiz that helps qualify prospective patients.
  * Author: Platform Marketing
@@ -23,7 +23,7 @@ if (!defined('CHIRO_QUIZ_PLUGIN_PATH')) {
 }
 
 if (!defined('CHIRO_QUIZ_PLUGIN_VERSION')) {
-    define('CHIRO_QUIZ_PLUGIN_VERSION', '1.0.15');
+    define('CHIRO_QUIZ_PLUGIN_VERSION', '1.0.16');
 }
 
 require_once('classes/class-chiro-quiz.php');
